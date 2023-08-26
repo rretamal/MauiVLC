@@ -1,0 +1,11 @@
+obj/
+bin/
+
+*.user
+.vs/
+
+**/Resources/Resource.designer.cs
+*.txt
+
+*.swp
+
