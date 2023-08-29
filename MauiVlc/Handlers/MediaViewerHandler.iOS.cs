@@ -1,22 +1,27 @@
-﻿using System;
-using LibVLCSharp.Platforms.Android;
-using LibVLCSharp.Shared;
-using MauiVlc.Controls;
+﻿using MauiVlc.Controls;
 using Microsoft.Maui.Handlers;
+using System;
+using LibVLCSharp.Platforms.iOS;
+using LibVLCSharp.Shared;
 
 namespace MauiVlc.Handlers
 {
-	public partial class MediaViewerHandler: ViewHandler<MediaViewer, VideoView>
+    public partial class MediaViewerHandler : ViewHandler<MediaViewer, VideoView>
     {
         VideoView _videoView;
         LibVLC _libVLC;
         LibVLCSharp.Shared.MediaPlayer _mediaPlayer;
 
-        protected override VideoView CreatePlatformView() => new VideoView(Context);
+        protected override VideoView CreatePlatformView()
+        {
+            return new VideoView();
+        }
 
         protected override void ConnectHandler(VideoView nativeView)
         {
             base.ConnectHandler(nativeView);
+
+            Core.Initialize();
 
             _libVLC = new LibVLC(enableDebugLogs: true);
             _mediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libVLC)
@@ -24,12 +29,10 @@ namespace MauiVlc.Handlers
                 EnableHardwareDecoding = true
             };
 
-            _videoView = nativeView ?? new VideoView(Context);
+            _videoView = nativeView ?? new VideoView();
             _videoView.MediaPlayer = _mediaPlayer;
 
             HandleUrl(VirtualView.VideoUrl);
-
-            base.ConnectHandler(nativeView);
         }
 
         protected override void DisconnectHandler(VideoView nativeView)
@@ -38,17 +41,14 @@ namespace MauiVlc.Handlers
             base.DisconnectHandler(nativeView);
         }
 
-        private void HandleUrl(string url)
+        public void HandleUrl(string url)
         {
             try
             {
-
                 if (url.EndsWith("/"))
                 {
                     url = url.TrimEnd('/');
                 }
-
-                //url = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
                 if (!string.IsNullOrEmpty(url))
                 {
@@ -70,9 +70,9 @@ namespace MauiVlc.Handlers
             }
             catch (Exception ex)
             {
+                // Handle exception
             }
         }
-
     }
 }
 
