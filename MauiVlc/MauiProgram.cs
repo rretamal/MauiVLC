@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MauiVlc.Controls;
+using Microsoft.Extensions.Logging;
 
 namespace MauiVlc
 {
@@ -9,6 +10,9 @@ namespace MauiVlc
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                             .ConfigureMauiHandlers((handlers) => {
+                                 handlers.AddHandler(typeof(MediaViewer), typeof(MauiVlc.Handlers.MediaViewerHandler));
+                             })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
