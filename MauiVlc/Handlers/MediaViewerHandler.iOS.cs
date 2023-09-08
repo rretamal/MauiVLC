@@ -32,13 +32,29 @@ namespace MauiVlc.Handlers
             _videoView = nativeView ?? new VideoView();
             _videoView.MediaPlayer = _mediaPlayer;
 
+            VirtualView.PauseRequested += VirtualView_PauseRequested;
+            VirtualView.PlayRequested += VirtualView_PlayRequested;
+
             HandleUrl(VirtualView.VideoUrl);
         }
 
         protected override void DisconnectHandler(VideoView nativeView)
         {
+            VirtualView.PauseRequested -= VirtualView_PauseRequested;
+            VirtualView.PlayRequested -= VirtualView_PlayRequested;
+
             nativeView.Dispose();
             base.DisconnectHandler(nativeView);
+        }
+
+        private void VirtualView_PlayRequested()
+        {
+            _videoView.MediaPlayer.Play();
+        }
+
+        private void VirtualView_PauseRequested()
+        {
+            _videoView.MediaPlayer.Pause();
         }
 
         public void HandleUrl(string url)

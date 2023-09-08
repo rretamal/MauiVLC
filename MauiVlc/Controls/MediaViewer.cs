@@ -1,8 +1,13 @@
 ﻿using System;
+using static Microsoft.Maui.LifecycleEvents.AndroidLifecycle;
+
 namespace MauiVlc.Controls
 {
 	public class MediaViewer : View
 	{
+        public event Action PauseRequested;
+        public event Action PlayRequested;
+
         public static BindableProperty VideoUrlProperty = BindableProperty.Create(nameof(VideoUrl)
            , typeof(string)
            , typeof(MediaViewer)
@@ -21,6 +26,16 @@ namespace MauiVlc.Controls
         public MediaViewer()
 		{
 		}
-	}
+
+        public void Pause()
+        {
+            PauseRequested?.Invoke();
+        }
+
+        public void Play()
+        {
+            PlayRequested?.Invoke();
+        }
+    }
 }
 
