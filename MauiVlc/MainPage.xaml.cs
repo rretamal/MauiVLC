@@ -23,7 +23,7 @@
 
         private void MainPage_OnResumeEvent()
         {
-            
+            videoViewer.Play();
         }
 
         private void MainPage_OnSleepEvent()

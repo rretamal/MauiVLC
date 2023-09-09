@@ -18,6 +18,35 @@ namespace MauiVlc.Handlers
         {
             base.ConnectHandler(nativeView);
 
+            PrepareControl(nativeView);
+            HandleUrl(VirtualView.VideoUrl);
+
+            base.ConnectHandler(nativeView);
+        }
+
+        private void VirtualView_PlayRequested()
+        {
+            ConnectHandler(null);
+
+            HandleUrl(VirtualView.VideoUrl);
+        }
+
+        private void VirtualView_PauseRequested()
+        {
+            _videoView.Dispose();
+            _mediaPlayer.Dispose();
+            _libVLC.Dispose();
+        }
+
+        protected override void DisconnectHandler(VideoView nativeView)
+        {
+            VirtualView.PauseRequested -= VirtualView_PauseRequested;
+            nativeView.Dispose();
+            base.DisconnectHandler(nativeView);
+        }
+
+        private void PrepareControl(VideoView nativeView)
+        {
             _libVLC = new LibVLC(enableDebugLogs: true);
             _mediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libVLC)
             {
@@ -29,27 +58,6 @@ namespace MauiVlc.Handlers
 
             VirtualView.PauseRequested += VirtualView_PauseRequested;
             VirtualView.PlayRequested += VirtualView_PlayRequested;
-
-            HandleUrl(VirtualView.VideoUrl);
-
-            base.ConnectHandler(nativeView);
-        }
-
-        private void VirtualView_PlayRequested()
-        {
-            HandleUrl(VirtualView.VideoUrl);
-        }
-
-        private void VirtualView_PauseRequested()
-        {
-            _videoView.MediaPlayer.Pause();
-        }
-
-        protected override void DisconnectHandler(VideoView nativeView)
-        {
-            VirtualView.PauseRequested -= VirtualView_PauseRequested;
-            nativeView.Dispose();
-            base.DisconnectHandler(nativeView);
         }
 
         private void HandleUrl(string url)
@@ -78,6 +86,7 @@ namespace MauiVlc.Handlers
 
                     _mediaPlayer.Media = media;
                     _mediaPlayer.Mute = true;
+                    _mediaPlayer.Play();
                 }
             }
             catch (Exception ex)
