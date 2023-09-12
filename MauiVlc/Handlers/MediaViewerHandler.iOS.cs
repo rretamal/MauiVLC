@@ -23,6 +23,33 @@ namespace MauiVlc.Handlers
 
             Core.Initialize();
 
+            PrepareControl(nativeView);
+            HandleUrl(VirtualView.VideoUrl);
+        }
+
+        protected override void DisconnectHandler(VideoView nativeView)
+        {
+            VirtualView.PauseRequested -= VirtualView_PauseRequested;
+            VirtualView.PlayRequested -= VirtualView_PlayRequested;
+
+            nativeView.Dispose();
+            base.DisconnectHandler(nativeView);
+        }
+
+        private void VirtualView_PlayRequested()
+        {
+            PrepareControl(_videoView);
+            HandleUrl(VirtualView.VideoUrl);
+            _mediaPlayer.Play();
+        }
+
+        private void VirtualView_PauseRequested()
+        {
+            _mediaPlayer.Pause();
+        }
+
+        public void PrepareControl(VideoView nativeView)
+        {
             _libVLC = new LibVLC(enableDebugLogs: true);
             _mediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libVLC)
             {
@@ -32,13 +59,8 @@ namespace MauiVlc.Handlers
             _videoView = nativeView ?? new VideoView();
             _videoView.MediaPlayer = _mediaPlayer;
 
-            HandleUrl(VirtualView.VideoUrl);
-        }
-
-        protected override void DisconnectHandler(VideoView nativeView)
-        {
-            nativeView.Dispose();
-            base.DisconnectHandler(nativeView);
+            VirtualView.PauseRequested += VirtualView_PauseRequested;
+            VirtualView.PlayRequested += VirtualView_PlayRequested;
         }
 
         public void HandleUrl(string url)
