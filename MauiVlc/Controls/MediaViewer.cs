@@ -1,5 +1,4 @@
 ﻿using System;
-using static Microsoft.Maui.LifecycleEvents.AndroidLifecycle;
 
 namespace MauiVlc.Controls
 {
