@@ -13,6 +13,7 @@ Puedes leer el artículo por el siguiente link:
 
 [Cómo Integrar LibVLCSharp en .NET MAUI](https://medium.com/@rretamal.dev/c%C3%B3mo-integrar-libvlcsharp-en-net-maui-2564576e4765)
 
-Enjoying the content? Show your support and buy me a coffee by clicking here!
+Enjoying the content? Show your support and buy me a coffee by clicking here! /
+¿Te está gustando el contenido? Muestra tu apoyo y cómprame un café haciendo clic aquí. 
 
 <a href="https://www.buymeacoffee.com/2hepU6W" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
