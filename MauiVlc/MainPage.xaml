@@ -16,7 +16,7 @@
                 HeightRequest="200"
                 HorizontalOptions="Center" />
 
-            <controls:MediaViewer x:Name="videoViewer" HeightRequest="300" HorizontalOptions="CenterAndExpand" VideoUrl="{Binding VideoUrl}" />
+            <controls:MediaViewer x:Name="videoViewer" WidthRequest="300" HeightRequest="300" HorizontalOptions="CenterAndExpand" VideoUrl="{Binding VideoUrl}" />
 
         </VerticalStackLayout>
     </ScrollView>
