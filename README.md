@@ -17,3 +17,5 @@ Enjoying the content? Show your support and buy me a coffee by clicking here! /
 ¿Te está gustando el contenido? Muestra tu apoyo y cómprame un café haciendo clic aquí. 
 
 <a href="https://www.buymeacoffee.com/2hepU6W" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
+This project is tested with BrowserStack
